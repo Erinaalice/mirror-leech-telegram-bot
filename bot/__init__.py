@@ -131,6 +131,7 @@ def aria2c_init():
         pass
 
 threading.Thread(target=aria2c_init).start()
+time.sleep(0.5)
 
 DOWNLOAD_DIR = None
 BOT_TOKEN = None
@@ -396,6 +397,11 @@ try:
     EQUAL_SPLITS = EQUAL_SPLITS.lower() == 'true'
 except KeyError:
     EQUAL_SPLITS = False
+try:
+    QB_SEED = getConfig('QB_SEED')
+    QB_SEED = QB_SEED.lower() == 'true'
+except KeyError:
+    QB_SEED = False
 try:
     CUSTOM_FILENAME = getConfig('CUSTOM_FILENAME')
     if len(CUSTOM_FILENAME) == 0:
