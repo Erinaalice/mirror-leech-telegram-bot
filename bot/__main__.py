@@ -6,6 +6,8 @@ import time
 import subprocess
 
 from pyrogram import idle
+from platform import python_version
+from pyrogram import __version__ as ve
 from sys import executable
 from telegram import ParseMode, InlineKeyboardMarkup
 from telegram.ext import CommandHandler
@@ -19,7 +21,7 @@ from .helper.ext_utils.telegraph_helper import telegraph
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, speedtest, count, leech_settings, search
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, speedtest, count, leech_settings, search, usage
 
 
 def stats(update, context):
@@ -51,6 +53,8 @@ def stats(update, context):
             f'<b>CPU:</b> {cpuUsage}%\n'\
             f'<b>RAM:</b> {mem_p}%\n'\
             f'<b>DISK:</b> {disk}%\n\n'\
+            f'<b>Python Version :</b> {python_version()}\n'\
+            f'<b>Pyrogram Version :</b> {ve}\n' \
             f'<b>Physical Cores:</b> {p_core}\n'\
             f'<b>Total Cores:</b> {t_core}\n\n'\
             f'<b>SWAP:</b> {swap_t} | <b>Used:</b> {swap_p}%\n'\
