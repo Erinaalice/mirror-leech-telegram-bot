@@ -12,7 +12,6 @@ google-auth-oauthlib
 gunicorn
 heroku3
 html_telegraph_poster
-js2py
 lk21
 lxml
 pillow
