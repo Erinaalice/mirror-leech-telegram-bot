@@ -93,7 +93,7 @@ class MegaAppListener(MegaListener):
             if self.is_cancelled:
                 self.continue_event.set()
             elif transfer.isFinished() and (transfer.isFolderTransfer() or transfer.getFileName() == self.name):
-                self.listener.onDownloadComplete()
+                threading.Thread(target=self.listener.onDownloadComplete).start()
                 self.continue_event.set()
         except Exception as e:
             LOGGER.error(e)
@@ -103,7 +103,6 @@ class MegaAppListener(MegaListener):
         state = transfer.getState()
         errStr = error.toString()
         LOGGER.error(f'Mega download error in file {transfer} {filen}: {error}')
-
         if state in [1, 4]:
             # Sometimes MEGA (offical client) can't stream a node either and raises a temp failed error.
             # Don't break the transfer queue if transfer's in queued (1) or retrying (4) state [causes seg fault]
@@ -169,7 +168,6 @@ class MegaDownloadHelper:
                 if smsg:
                     msg1 = "File/Folder is already available in Drive.\nHere are the search results:"
                     sendMarkup(msg1, listener.bot, listener.update, button)
-                    executor.continue_event.set()
                     return
         limit = None
         if ZIP_UNZIP_LIMIT is not None and (listener.isZip or listener.extract):
@@ -183,7 +181,6 @@ class MegaDownloadHelper:
             size = api.getSize(node)
             if size > limit * 1024**3:
                 sendMessage(msg3, listener.bot, listener.update)
-                executor.continue_event.set()
                 return
         with download_dict_lock:
             download_dict[listener.uid] = MegaDownloadStatus(mega_listener, listener)
@@ -191,4 +188,4 @@ class MegaDownloadHelper:
         gid = ''.join(random.SystemRandom().choices(string.ascii_letters + string.digits, k=8))
         mega_listener.setValues(node.getName(), api.getSize(node), gid)
         sendStatusMessage(listener.update, listener.bot)
-        executor.do(api.startDownload,(node,path))
+        executor.do(api.startDownload, (node, path))
