@@ -122,6 +122,7 @@ class MirrorListener(listeners.MirrorListeners):
                                     result = subprocess.run(["7z", "x", m_path, f"-o{dirpath}"])
                                 if result.returncode != 0:
                                     LOGGER.warning('Unable to extract archive!')
+                                break
                         for filee in files:
                             if filee.endswith(".rar") or re.search(r'\.r\d+$', filee) \
                                or re.search(r'\.7z.\d+$', filee) or re.search(r'\.z\d+$', filee) \
@@ -253,14 +254,18 @@ class MirrorListener(listeners.MirrorListeners):
                 return
 
         with download_dict_lock:
-            msg = f'<b>Name: </b><code>{download_dict[self.uid].name()}</code>\n\n<b>Size: </b>{size}'
-            msg += f'\n\n<b>Type: </b>{typ}'
+            chat_id = str(self.message.chat.id)[4:]
+            p = 'Click Here'           
+            msg = f'<b>🍩𝙽𝙰𝙼𝙰: </b><code>{download_dict[self.uid].name()}</code>'
+            msg += f'\n<b>🍗𝚂𝙸𝚉𝙴: </b>{size}'
+            msg += f'\n<b>🍿𝚃𝚈𝙿𝙴: </b>{typ}'
+            msg += f"\n<b>🎂𝙼𝙴𝚂𝚂𝙰𝙶𝙴: </b> <a href='https://t.me/c/{chat_id}/{self.uid}'>{p}</a>\n"
             if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
-                msg += f'\n<b>SubFolders: </b>{folders}'
-                msg += f'\n<b>Files: </b>{files}'
+                msg += f'\n<b>🥤𝚂𝚄𝙱𝙵𝙾𝙻𝙳𝙴𝚁𝚂: </b>{folders}'
+                msg += f'\n<b>🍰𝙵𝙸𝙻𝙴𝚂: </b>{files}'
             buttons = button_build.ButtonMaker()
             link = short_url(link)
-            buttons.buildbutton("☁️ Drive Link", link)
+            buttons.buildbutton("🤡 Drive Link", link)
             LOGGER.info(f'Done Uploading {download_dict[self.uid].name()}')
             if INDEX_URL is not None:
                 url_path = requests.utils.quote(f'{download_dict[self.uid].name()}')
@@ -268,10 +273,10 @@ class MirrorListener(listeners.MirrorListeners):
                 if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
                     share_url += '/'
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("😳 Index Link", share_url)
                 else:
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("😳 Index Link", share_url)
                     if VIEW_LINK:
                         share_urls = f'{INDEX_URL}/{url_path}?a=view'
                         share_urls = short_url(share_urls)
@@ -283,11 +288,11 @@ class MirrorListener(listeners.MirrorListeners):
             if BUTTON_SIX_NAME is not None and BUTTON_SIX_URL is not None:
                 buttons.buildbutton(f"{BUTTON_SIX_NAME}", f"{BUTTON_SIX_URL}")
             if self.message.from_user.username:
-                uname = f"@{self.message.from_user.username}"
-            else:
                 uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
+            else:
+                uname = f"@{self.message.from_user.username}"
             if uname is not None:
-                msg += f'\n\n<b>cc: </b>{uname}'
+                msg += f'\n\n<b>🙄𝙲𝙻𝙸𝙴𝙽𝚃: </b>{uname}'
 
         sendMarkup(msg, self.bot, self.update, InlineKeyboardMarkup(buttons.build_menu(2)))
         if self.isQbit and QB_SEED:
