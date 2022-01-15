@@ -256,13 +256,13 @@ class MirrorListener(listeners.MirrorListeners):
         with download_dict_lock:
             chat_id = str(self.message.chat.id)[4:]
             p = 'Klik Di Sini'           
-            msg = f'<b>👤 𝙽𝙰𝙼𝙰 : </b><code>{download_dict[self.uid].name()}</code>'
-            msg += f'\n<b>💾 𝚂𝙸𝚉𝙴 : </b>{size}'
-            msg += f'\n<b>🗃 𝚃𝚈𝙿𝙴 : </b>{typ}'
-            msg += f"\n<b>🎐 𝙼𝙴𝚂𝚂𝙰𝙶𝙴 : </b> <a href='https://t.me/c/{chat_id}/{self.uid}'>{p}</a>\n"
+            msg = f'<b>📁 𝕟𝕒𝕞𝕒 𝕗𝕚𝕝𝕖 : </b><code>{download_dict[self.uid].name()}</code>'
+            msg += f'\n<b>💾 𝕤𝕚𝕫𝕖 : </b>{size}'
+            msg += f'\n<b>🗃 𝕥𝕪𝕡𝕖 : </b>{typ}'
+            msg += f"\n<b>🎐 𝕞𝕖𝕤𝕤𝕒𝕘𝕖 : </b> <a href='https://t.me/c/{chat_id}/{self.uid}'>{p}</a>\n"
             if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
-                msg += f'\n<b>🗄 𝚂𝚄𝙱𝙵𝙾𝙻𝙳𝙴𝚁𝚂 : </b>{folders}'
-                msg += f'\n<b>📁 𝙵𝙸𝙻𝙴𝚂 : </b>{files}'
+                msg += f'\n<b>🗄 𝕤𝕦𝕓𝕗𝕠𝕝𝕕𝕖𝕣𝕤 : </b>{folders}'
+                msg += f'\n<b>📁 𝕗𝕚𝕝𝕖𝕤 : </b>{files}'
             buttons = button_build.ButtonMaker()
             link = short_url(link)
             buttons.buildbutton("☁️ GDrive", link)
