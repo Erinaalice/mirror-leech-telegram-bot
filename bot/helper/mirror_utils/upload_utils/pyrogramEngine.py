@@ -56,7 +56,7 @@ class TgUploader:
                 self.upload_file(up_path, filee, dirpath)
                 if self.is_cancelled:
                     return
-                self.msgs_dict[filee] = self.sent_msg.message_id
+                self.msgs_dict[filee] = self.sent_msg.link
                 self.last_uploaded = 0
                 time.sleep(1.5)
         if len(self.msgs_dict) <= self.corrupted:
@@ -99,7 +99,6 @@ class TgUploader:
                     self.sent_msg = self.sent_msg.reply_video(video=up_path,
                                                               quote=False,
                                                               caption=cap_mono,
-                                                              parse_mode="html",
                                                               duration=duration,
                                                               width=width,
                                                               height=height,
@@ -112,7 +111,6 @@ class TgUploader:
                     self.sent_msg = self.sent_msg.reply_audio(audio=up_path,
                                                               quote=False,
                                                               caption=cap_mono,
-                                                              parse_mode="html",
                                                               duration=duration,
                                                               performer=artist,
                                                               title=title,
@@ -123,7 +121,6 @@ class TgUploader:
                     self.sent_msg = self.sent_msg.reply_photo(photo=up_path,
                                                               quote=False,
                                                               caption=cap_mono,
-                                                              parse_mode="html",
                                                               disable_notification=True,
                                                               progress=self.upload_progress)
                 else:
@@ -139,7 +136,6 @@ class TgUploader:
                                                              quote=False,
                                                              thumb=thumb,
                                                              caption=cap_mono,
-                                                             parse_mode="html",
                                                              disable_notification=True,
                                                              progress=self.upload_progress)
         except FloodWait as f:
